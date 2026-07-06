@@ -111,6 +111,11 @@ def run_ubio_attendance():
 
     try:
         settings = frappe.get_single("BioTime Settings")
+
+        if settings.integration_source not in ["UBio Alpeta", "All"]:
+            logger.info("UBio integration is disabled in settings.")
+            return {"status": "skipped", "message": "UBio integration is disabled in settings."}
+        
         inserted = 0
         skipped = 0
 

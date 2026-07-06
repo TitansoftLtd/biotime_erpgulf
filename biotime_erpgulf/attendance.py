@@ -167,6 +167,10 @@ def run_biotime_attendance():
 
     settings = frappe.get_single("BioTime Settings")
 
+    if settings.integration_source not in ["BioTime", "All"]:
+        logger.info("BioTime integration is disabled in settings.")
+        return {"status": "skipped", "message": "BioTime integration is disabled in settings."}
+
     if not settings.start_year:
         frappe.throw("Start Year is mandatory in BioTime Settings")
 
